@@ -599,11 +599,11 @@
             this.j.tm.render2(equip.ID, 'item', x, y + 30, this.sp[this.sp_index++]);
             this.rendertxt(equip.Name, font_size, x + 90, y + 30, this.color_name);
             this.rendertxt("攻擊", 18, x + 90, y + 55, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddAttack), 18, x + 126, y + 75, this.select_color2(equip.AddAttack));
-            this.rendertxt("防禦", 18, x + 90, y + 75, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddDefence), 18, x + 126, y + 95, this.select_color2(equip.AddDefence));
+            this.rendertxt(g.utils.lformat(equip.AddAttack), 18, x + 126, y + 55, this.select_color2(equip.AddAttack));
+			this.rendertxt("防禦", 18, x + 90, y + 75, this.color_ability1);
+            this.rendertxt(g.utils.lformat(equip.AddDefence), 18, x + 126, y + 75, this.select_color2(equip.AddDefence));
             this.rendertxt("輕功", 18, x + 90	, y + 95, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddSpeed), 18, x + 126, y + 55, this.select_color2(equip.AddSpeed));
+            this.rendertxt(g.utils.lformat(equip.AddSpeed), 18, x + 126, y + 95, this.select_color2(equip.AddSpeed));
         }
 
 
@@ -618,11 +618,11 @@
             this.j.tm.render2(equip.ID, 'item', x, y + 30, this.sp[this.sp_index++]);
             this.rendertxt(equip.Name, font_size, x + 90, y + 30, this.color_name);
             this.rendertxt("攻擊", 18, x + 90, y + 55, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddAttack), 18, x + 126, y + 75, this.select_color2(equip.AddAttack));
+            this.rendertxt(g.utils.lformat(equip.AddAttack), 18, x + 126, y + 55, this.select_color2(equip.AddAttack));
             this.rendertxt("防禦", 18, x + 90, y + 75, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddDefence), 18, x + 126, y + 95, this.select_color2(equip.AddDefence));
+            this.rendertxt(g.utils.lformat(equip.AddDefence), 18, x + 126, y + 75, this.select_color2(equip.AddDefence));
             this.rendertxt("輕功", 18, x + 90, y + 95, this.color_ability1);
-            this.rendertxt(g.utils.lformat(equip.AddSpeed), 18, x + 126, y + 55, this.select_color2(equip.AddSpeed));
+            this.rendertxt(g.utils.lformat(equip.AddSpeed), 18, x + 126, y + 95, this.select_color2(equip.AddSpeed));
         }
     };
 

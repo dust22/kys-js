@@ -513,21 +513,29 @@
 
         x = this.x + 20 - 300;
         y = this.y + 200;
-
+		
+		var temp_x = 0;
+		var temp_xx = 160;
         this.rendertxt("攻擊", font_size, x, y, this.color_ability1);
         this.rendertxt(role.Attack, font_size, x + 44, y, this.select_color1(role.Attack, this.j.op.MaxAttack), 5);
-        this.rendertxt("防禦", font_size, x + 200, y, this.color_ability1);
-        this.rendertxt(role.Defence, font_size, x + 244, y, this.select_color1(role.Defence, this.j.op.MaxDefence), 5);
-        this.rendertxt("輕功", font_size, x + 400, y, this.color_ability1);
-        this.rendertxt(role.Speed, font_size, x + 444, y, this.select_color1(role.Speed, this.j.op.MaxSpeed), 5);
         this.rendertxt("醫療", font_size, x, y + 25, this.color_ability1);
         this.rendertxt(role.Medcine, font_size, x + 44, y + 25, this.select_color1(role.Medcine, this.j.op.MaxMedcine), 5);
-        this.rendertxt("解毒", font_size, x + 200, y + 25, this.color_ability1);
-        this.rendertxt(role.Detoxification, font_size, x + 244, y + 25, this.select_color1(role.Detoxification, this.j.op.MaxDetoxification), 5);
-        this.rendertxt("用毒", font_size, x + 400, y + 25, this.color_ability1);
-        this.rendertxt(role.UsePoison, font_size, x + 444, y + 25, this.select_color1(role.UsePoison, this.j.op.MaxUsePoison), 5);
-
-
+        temp_x += temp_xx;
+		this.rendertxt("防禦", font_size, x + temp_x, y, this.color_ability1);
+        this.rendertxt(role.Defence, font_size, x + temp_x + 44, y, this.select_color1(role.Defence, this.j.op.MaxDefence), 5);
+        this.rendertxt("解毒", font_size, x + temp_x, y + 25, this.color_ability1);
+        this.rendertxt(role.Detoxification, font_size, x + temp_x + 44, y + 25, this.select_color1(role.Detoxification, this.j.op.MaxDetoxification), 5);
+        temp_x += temp_xx;
+		this.rendertxt("輕功", font_size, x + temp_x, y, this.color_ability1);
+        this.rendertxt(role.Speed, font_size, x + temp_x + 44, y, this.select_color1(role.Speed, this.j.op.MaxSpeed), 5);
+        this.rendertxt("用毒", font_size, x + temp_x, y + 25, this.color_ability1);
+        this.rendertxt(role.UsePoison, font_size, x + temp_x + 44, y + 25, this.select_color1(role.UsePoison, this.j.op.MaxUsePoison), 5);
+		temp_x += temp_xx;
+		this.rendertxt("資質", font_size, x + temp_x, y, this.color_ability1);
+        this.rendertxt(role.IQ, font_size, x + temp_x + 44, y, this.select_color1(role.IQ, this.j.op.MaxIQ), 5);
+		this.rendertxt("抗毒", font_size, x + temp_x, y + 25, this.color_ability1);
+        this.rendertxt(role.AntiPoison, font_size, x + temp_x + 44, y + 25, this.select_color1(role.AntiPoison, this.j.op.MaxAntiPoison), 5);
+		
         x = this.x + 20 - 300;
         y = this.y + 270;
         this.rendertxt("技能", font_size, x, y, this.color_name);
@@ -1041,7 +1049,7 @@
         this.role.data.Knife = 25 + g.utils.rand(6);
         this.role.data.Unusual = 25 + g.utils.rand(6);
         this.role.data.HiddenWeapon = 25 + g.utils.rand(6);
-        this.role.data.IQ = 25 + g.utils.rand(100);
+        this.role.data.IQ = 1 + g.utils.rand(100);
     };
     c.RandomRole.prototype.setRole = function(r) {
         this.role = r;

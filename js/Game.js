@@ -33,7 +33,7 @@
     g.resload['subscene'] = 1;
     g.resload['mainmap'] = 1;
     g.resload['ui'] = 1;
-    g.current_language = 'gbk';
+    g.current_language = 'big5';
     g.stats = new Stats();
     g.stats.setMode( 0 );
 

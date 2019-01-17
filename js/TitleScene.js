@@ -8,7 +8,10 @@
             head_id : null,
             head_x : 0,
             head_y : 0,
-            color : g.utils.rgbToHex(255, 255, 255)
+            color : g.utils.rgbToHex(255, 255, 255),
+			txt : [],
+			txt_max : 50,
+			tex_index : 0,
         });
         this.bg = new PIXI.Sprite();
         this.head = new PIXI.Sprite();
@@ -20,7 +23,7 @@
         this.addCustom(this.save_menu);
         this.addCustom(this.menu);
         this.save_menu.position.set(500, 300);
-        this.menu.position.set(400, 250);
+        this.menu.position.set(425, 250);
         var that = this;
 
         this.menu.getResult = function() {
@@ -49,6 +52,13 @@
         this.overlay.drawRect(0, 0, g.app.view.width, g.app.view.height);
         this.overlay.visible = false;
         this.addChild(this.overlay);
+		this.txdxinfo = false;
+		for (var i = 0; i < this.txt_max; i++ ) {
+            var tx = new PIXI.Text();
+			this.addChild(tx);
+            this.txt.push(tx);
+        }
+		
     };
 
     c.TitleScene.prototype = Object.create(PIXI.Container.prototype);
@@ -79,6 +89,11 @@
 
     };
     c.TitleScene.prototype.draw = function() {
+		this.tex_index = 0;
+		for (var i = 0; i < this.txt_max; i++ ) {
+            this.txt[i].visible = false;
+        }
+		
         if (!this.fixed_update) {
             this.requestid = requestAnimationFrame(this.draw.bind(this));
         }
@@ -107,27 +122,35 @@
         if (this.head_id != null) {
             this.j.tm.render2(this.head_id, "head", this.head_x, this.head_y, this.head, this.color, alpha / 255);
         }
+		this.j.tm.rendertxt("鐵血丹心論壇", 24, 438, 580, g.utils.rgbToHex(200, 0, 0), 0, this);
+		this.j.tm.rendertxt("https://www.dawuxia.net", 24, 371, 610, g.utils.rgbToHex(200, 0, 0), 0, this);
+		
         this.drawAllCustom();
+		
         if (this.debug) {
             g.stats.end();
         }
+		
     };
 
     c.TitleScene.prototype.start = function() {
         this.j.target = this.j.title;
         this.visible = true;
         this.menu.visible = true;
-        PIXI.sound.stopAll();
-        PIXI.sound.play('bgm-16', {loop : true, volume : g.volume});
-        this.save_menu.position.set(500, 300);
+		this.save_menu.position.set(500, 300);
         this.draw();
+		
+		g.load_music(function(){
+			PIXI.sound.stopAll();
+			PIXI.sound.play('bgm-16', {loop : true, volume : g.volume});
+		});
     };
     c.TitleScene.prototype.init = function() {
         this.j.tm.render2(0, 'title', 0, 0, this.bg);
         this.menu.addItem('title', 3, 23, 23, 20, 0);
         this.menu.addItem('title', 4, 24, 24, 20, 50);
         this.menu.addItem('title', 6, 26, 26, 20, 100);
-        this.start();
+		this.start();
     };
 
 

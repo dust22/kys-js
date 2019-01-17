@@ -53,8 +53,8 @@
         this.custom_items.push(e);
         this.addChild(e);
     }
-
-
+	
+	
     var j = {};
     Object.assign(j, {
         randEngine : Random.engines.mt19937().autoSeed(),
@@ -328,7 +328,7 @@
             arg.url = 'game/resource/null.png';
             args.push(arg);
 
-            for (var i = 1; i <= 23; i++) {
+            /*for (var i = 1; i <= 23; i++) {
                 var arg = {};
                 arg.name = 'bgm-' + i;
                 arg.url = 'game/music/' + i + '.ogg';
@@ -345,10 +345,10 @@
                 arg.name = 'sound-e-' + i;
                 arg.url = 'game/sound/e' + sprintf("%02d", i) + '.wav';
                 args.push(arg);
-            }
+            }*/
 
 
-            battleids.forEach(function(i) {
+            /*battleids.forEach(function(i) {
                 var ii = g.utils.zpad(i, 3);
                 var arg = {};
                 arg.name = 'fight-' + ii + 'json';
@@ -366,7 +366,7 @@
                 arg.name = 'fight-' + ii + '-index';
                 arg.url = 'game/resource/fight/fight' + ii + '/index.ka';
                 args.push(arg);
-            });
+            });*/
             for (var i = 0; i <= 52; i++) {
                 var ii = g.utils.zpad(i, 3);
                 var arg = {};
@@ -420,7 +420,7 @@
             }
             var battletextures = {};
 
-            battleids.forEach(function(i) {
+            /*battleids.forEach(function(i) {
                 var ii = g.utils.zpad(i, 3);
                 j.battle.battle_fight['fight-' + ii] = res['fight-' + ii].data;
                 if (res['fight-' + ii + '-index']) {
@@ -428,7 +428,7 @@
                     var delta_xy = g.utils.getIndex(res['fight-' + ii + '-index'].data, index);
                     g.delta['fight' + ii] = delta_xy;
                 }
-            });
+            });*/
             for (var i = 0; i <= 52; i++) {
                 var ii = g.utils.zpad(i, 3);
                 if (res['eft-' + ii + '-index']) {
@@ -452,6 +452,82 @@
             loadingbar.drawRect(0, 0, 200 * parseInt(file_loader.progress) / 100, 9);
         });
     }
+	g.musicinit = false;
+	g.load_music=function(next){
+		if(!g.musicinit){
+			g.musicinit=true;
+			var file_load = new PIXI.loaders.Loader();
+			file_load.pre(mycache);
+			var args = [];
+			for (var i = 1; i <= 23; i++) {
+				var arg = {};
+				arg.name = 'bgm-' + i;
+				arg.url = 'game/music/' + i + '.ogg';
+				args.push(arg);
+			}
+			for (var i = 0; i <= 24; i++) {
+				var arg = {};
+				arg.name = 'sound-atk-' + i;
+				arg.url = 'game/sound/atk' + sprintf("%02d", i) + '.wav';
+				args.push(arg);
+			}
+			for (var i = 0; i <= 52; i++) {
+				var arg = {};
+				arg.name = 'sound-e-' + i;
+				arg.url = 'game/sound/e' + sprintf("%02d", i) + '.wav';
+				args.push(arg);
+			}
+			file_load.add(args);
+			file_load.load((file_loader, res) => {
+				next();
+			});
+		}else{
+			next();
+		}
+	}
+	g.battleinit = false;
+	g.load_battle = function(next){
+		if(!g.battleinit){
+			g.battleinit=true;
+			var file_load = new PIXI.loaders.Loader();
+			file_load.pre(mycache);
+			var args = [];
+			battleids.forEach(function(i) {
+                var ii = g.utils.zpad(i, 3);
+                var arg = {};
+                arg.name = 'fight-' + ii + 'json';
+                arg.url = 'game/resource/fight/' + ii + '.json';
+                args.push(arg);
+
+                var arg = {};
+                arg.name = 'fight-' + ii;
+                arg.res_type = 'frame';
+                arg.url = 'game/resource/fight/fight' + g.utils.zpad(i, 3) + '/fightframe.txt';
+                args.push(arg);
+
+
+                var arg = {};
+                arg.name = 'fight-' + ii + '-index';
+                arg.url = 'game/resource/fight/fight' + ii + '/index.ka';
+                args.push(arg);
+            });
+			file_load.add(args);
+			file_load.load((file_loader, res) => {
+				battleids.forEach(function(i) {
+					var ii = g.utils.zpad(i, 3);
+					j.battle.battle_fight['fight-' + ii] = res['fight-' + ii].data;
+					if (res['fight-' + ii + '-index']) {
+						var index = new Uint16Array(res['fight-' + ii + '-index'].data);
+						var delta_xy = g.utils.getIndex(res['fight-' + ii + '-index'].data, index);
+						g.delta['fight' + ii] = delta_xy;
+					}
+				});
+				next();
+			});
+		}else{
+			next();
+		}
+	}
     function load_db() {
         if (dbinit) {
             var cb = function(i) {
@@ -492,8 +568,8 @@
 
         j.save.load(0);
         if (g.debug == 'battle') {
-            j.battle.setID(77);
-            j.battle.start();
+			j.battle.setID(77);
+			j.battle.start();
             return;
         }
         if (g.debug == 'title') {

@@ -94,7 +94,7 @@
                 eng_count ++;
                 w = fontsize / 2;
             }
-
+			
             target.txt[target.tex_index].visible = true;
             target.txt[target.tex_index].setText(txt[p]);
             target.txt[target.tex_index].x = wx;

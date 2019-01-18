@@ -731,7 +731,6 @@
         this.j.subscene.cameraView.push([x1, y1]);
     };
     c.Event.prototype.tryBattle = function(battle_id, get_exp, skip_queue) {
-		while(!g.battleinit){}
 		this.loop = false;
 		this.j.battle.setID(battle_id);
 		this.clearTalkBox();

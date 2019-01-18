@@ -348,7 +348,7 @@
             }*/
 
 
-            /*battleids.forEach(function(i) {
+            battleids.forEach(function(i) {
                 var ii = g.utils.zpad(i, 3);
                 var arg = {};
                 arg.name = 'fight-' + ii + 'json';
@@ -366,7 +366,7 @@
                 arg.name = 'fight-' + ii + '-index';
                 arg.url = 'game/resource/fight/fight' + ii + '/index.ka';
                 args.push(arg);
-            });*/
+            });
             for (var i = 0; i <= 52; i++) {
                 var ii = g.utils.zpad(i, 3);
                 var arg = {};
@@ -420,7 +420,7 @@
             }
             var battletextures = {};
 
-            /*battleids.forEach(function(i) {
+            battleids.forEach(function(i) {
                 var ii = g.utils.zpad(i, 3);
                 j.battle.battle_fight['fight-' + ii] = res['fight-' + ii].data;
                 if (res['fight-' + ii + '-index']) {
@@ -428,7 +428,7 @@
                     var delta_xy = g.utils.getIndex(res['fight-' + ii + '-index'].data, index);
                     g.delta['fight' + ii] = delta_xy;
                 }
-            });*/
+            });
             for (var i = 0; i <= 52; i++) {
                 var ii = g.utils.zpad(i, 3);
                 if (res['eft-' + ii + '-index']) {
@@ -453,7 +453,7 @@
         });
     }
 	g.musicinit = false;
-	g.load_music=function(next){
+	g.load_music = (next)=>{
 		if(!g.musicinit){
 			g.musicinit=true;
 			var file_load = new PIXI.loaders.Loader();
@@ -483,46 +483,6 @@
 			});
 		}else{
 			next();
-		}
-	}
-	g.battleinit = false;
-	g.load_battle = function(){
-		if(!g.battleinit){
-			var file_load = new PIXI.loaders.Loader();
-			file_load.pre(mycache);
-			var args = [];
-			battleids.forEach(function(i) {
-                var ii = g.utils.zpad(i, 3);
-                var arg = {};
-                arg.name = 'fight-' + ii + 'json';
-                arg.url = 'game/resource/fight/' + ii + '.json';
-                args.push(arg);
-
-                var arg = {};
-                arg.name = 'fight-' + ii;
-                arg.res_type = 'frame';
-                arg.url = 'game/resource/fight/fight' + g.utils.zpad(i, 3) + '/fightframe.txt';
-                args.push(arg);
-
-
-                var arg = {};
-                arg.name = 'fight-' + ii + '-index';
-                arg.url = 'game/resource/fight/fight' + ii + '/index.ka';
-                args.push(arg);
-            });
-			file_load.add(args);
-			file_load.load((file_loader, res) => {
-				battleids.forEach(function(i) {
-					var ii = g.utils.zpad(i, 3);
-					j.battle.battle_fight['fight-' + ii] = res['fight-' + ii].data;
-					if (res['fight-' + ii + '-index']) {
-						var index = new Uint16Array(res['fight-' + ii + '-index'].data);
-						var delta_xy = g.utils.getIndex(res['fight-' + ii + '-index'].data, index);
-						g.delta['fight' + ii] = delta_xy;
-					}
-				});
-				g.battleinit=true;
-			});
 		}
 	}
     function load_db() {

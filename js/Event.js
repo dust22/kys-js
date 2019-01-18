@@ -743,7 +743,7 @@
 		}
 		var f2 = function() {this.event_result(this.j.battle.result === 0);}
 		this.queue.push({'target' : this.j.battle, 'func' : f, 'init' : 0, 'result' : f2.bind(this)});
-
+		
     };
     c.Event.prototype.openAllSubMap = function() {
         var i = 0;

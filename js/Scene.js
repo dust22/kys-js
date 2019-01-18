@@ -1,14 +1,5 @@
 (function (PIXI, g, c, window) {
     'use strict';
-    c.PointEx = function() {
-        this.x = this.y = this.g = this.h = this.f = this.Gx = this.Gy = this.step = 0;
-        this.towards = 0;
-    };
-    c.PointEx.prototype.heuristic = function(Fx, Fy) {
-        this.h = (Math.abs(parseInt(this.x - Fx)) + Math.abs(parseInt(this.y - Fy))) * 10;
-
-        return this.h;
-    };
     c.Scene = function() {
 
     };
@@ -212,77 +203,44 @@
     };
 
     c.Scene.prototype.findWay = function(Mx, My, Fx, Fy) {
-        var visited = {};
-        var dirs = [[1, 0], [0, -1], [0, 1], [-1, 0]];
-        var myPoint = new c.PointEx();
-        myPoint.x = Mx;
-        myPoint.y = My;
-        myPoint.towards = this.calTowards(Mx, My, Fx, Fy);
-        myPoint.parent = myPoint;
-        myPoint.heuristic(Fx, Fy);
-        var que = [];
-        que.push(myPoint);
-
-
-        var sNum = 0;
-
-        while (que.length && sNum <= this.astar_limit) {
-
-            var t = new c.PointEx();
-            t = que[que.length - 1];
-            que.pop();
-            if (!(t.x in visited)) {
-                visited[t.x] = {};
-            }
-
-            visited[t.x][t.y] = 1;
-
-
-
-            sNum++;
-            if (t.x == Fx && t.y == Fy) {
-                this.min_step = t.step;
-                this.way_que.push(t);
-                var k = 0;
-                // t != myPoint ?
-                while (k <= this.min_step) {
-                    t.towards = t.parent.towards; // ???
-                    this.way_que.push(t);
-                    t = t.parent;
-                    k++;
-                }
+        // standard BFS
+        let dirs = [{x: 1, y: 0}, {x: 0, y: -1}, {x: 0, y: 1}, {x: -1, y: 0}];
+        let root = {x: Mx, y: My};
+        let visited = new Set(JSON.stringify(root));
+        root.parent = null;
+        let que = [root];
+        let steps = 0;
+        const maxSteps = 10000;
+        while (que.length > 0) {
+            if (steps >= maxSteps) {
                 break;
             }
-            else {
-                for (var i = 0; i < 4; i++) {
-                    var s = new c.PointEx();
-                    s.x = t.x + dirs[i][0];
-                    s.y = t.y + dirs[i][1];
-
-                    var can_visit = (!(s.x in visited) || !(s.y in visited[s.x]));
-
-                    if (this.canWalk(s.x, s.y) && can_visit) {
-                        s.g = t.g + 10;
-                        s.towards = i;
-
-
-                        if (s.towards == t.towards) {
-                            s.heuristic(Fx, Fy);
-                        }
-                        else {
-                            s.h = s.heuristic(Fx, Fy) + 1;
-                        }
-                        s.step = t.step + 1;
-                        s.f = s.g + s.h;
-                        s.parent = t;
-                        que.push(s);
-                    }
+            let node = que.shift();
+            // fount it
+            if (node.x === Fx && node.y === Fy) {
+                let parent = node;
+                let results = [];
+                // get all parents, in reverse
+                while (parent) {
+                    results.push({x: parent.x, y: parent.y});
+                    parent = parent.parent;
                 }
-                que.sort(function(a, b) {
-                    return a.f < b.f;
-                });
+                this.way_que = results;
+                break;
             }
+            dirs.forEach(dir => {
+                let newPoint = {x: node.x + dir.x, y: node.y + dir.y};
+                let hashablePoint = JSON.stringify(newPoint);
+                if (!this.canWalk(newPoint.x, newPoint.y) || visited.has(hashablePoint)) {
+                    return;
+                }
+                visited.add(hashablePoint);
+                newPoint.parent = node;
+                que.push(newPoint);
+            });
+            steps += 1;
         }
+        // not found, do nothing
     };
 
     c.Scene.prototype.getPositionOnRender = function(x, y, view_x, view_y) {

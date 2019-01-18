@@ -731,22 +731,19 @@
         this.j.subscene.cameraView.push([x1, y1]);
     };
     c.Event.prototype.tryBattle = function(battle_id, get_exp, skip_queue) {
-		var _this = this;
-		g.load_battle(function(){
-			
-			_this.loop = false;
-			_this.j.battle.setID(battle_id);
-			_this.clearTalkBox();
-			_this.j.subscene.stop();
-			_this.j.battle.start();
-			var f = function() {};
+		while(!g.battleinit){}
+		this.loop = false;
+		this.j.battle.setID(battle_id);
+		this.clearTalkBox();
+		this.j.subscene.stop();
+		this.j.battle.start();
+		var f = function() {};
 
-			if (skip_queue) {
-				return;
-			}
-			var f2 = function() {_this.event_result(_this.j.battle.result === 0);}
-			_this.queue.push({'target' : _this.j.battle, 'func' : f, 'init' : 0, 'result' : f2.bind(_this)});
-		});
+		if (skip_queue) {
+			return;
+		}
+		var f2 = function() {this.event_result(this.j.battle.result === 0);}
+		this.queue.push({'target' : this.j.battle, 'func' : f, 'init' : 0, 'result' : f2.bind(this)});
 
     };
     c.Event.prototype.openAllSubMap = function() {

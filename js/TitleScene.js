@@ -143,6 +143,7 @@
 		g.load_music(function(){
 			PIXI.sound.stopAll();
 			PIXI.sound.play('bgm-16', {loop : true, volume : g.volume});
+			g.load_battle();
 		});
     };
     c.TitleScene.prototype.init = function() {

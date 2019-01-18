@@ -486,9 +486,8 @@
 		}
 	}
 	g.battleinit = false;
-	g.load_battle = function(next){
+	g.load_battle = function(){
 		if(!g.battleinit){
-			g.battleinit=true;
 			var file_load = new PIXI.loaders.Loader();
 			file_load.pre(mycache);
 			var args = [];
@@ -522,10 +521,8 @@
 						g.delta['fight' + ii] = delta_xy;
 					}
 				});
-				next();
+				g.battleinit=true;
 			});
-		}else{
-			next();
 		}
 	}
     function load_db() {

@@ -864,7 +864,9 @@
         color = g.utils.rgbToHex(224, 170, 255);
         var role = this.j.save.getRole(item.data.OnlySuitableRole);
         if (role) {
-            this.showOneProperty("僅適合", role.data.Name, size, color);
+			if(item.data.ItemType != 3){
+				this.showOneProperty("僅適合", role.data.Name, size, color);
+			}
             return;
         }
 

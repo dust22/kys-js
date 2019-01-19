@@ -613,10 +613,10 @@
             that.tbox.visible = true;
             that.tbox.setText("獲得" + that.j.save.getItem(item_id).data.Name.replace(/\0/g,"") + count);
             that.tbox.setTextPosition(-20, 100);
-
-            that.tbox.setTexture(item_id, "item");
+            var sp = that.tbox.setTexture(item_id, "item");
             that.tbox.onPressedOK = function(e) {
                 that.tbox.visible = false;
+				that.tbox.removeChild(sp);
                 that.visible = false;
             };
         };

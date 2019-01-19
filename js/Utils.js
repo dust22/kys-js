@@ -276,7 +276,7 @@
         this.sp = new PIXI.Sprite();
         this.addChild(this.sp);
         this.j.tm.render2(normal_id, res_type, 0, 0, this.sp);
-
+		return this.sp;
     };
     c.TextBox.prototype.bgResize = function() {
         if (this.have_box && this.spbg) {

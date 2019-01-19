@@ -142,7 +142,6 @@
             }
         }
 
-
         if (this.mode == 0) {
             if (this.item) {
 

@@ -858,7 +858,7 @@
         }
         else if (i.data.ItemType == 1 || i.data.ItemType == 2) {
             if (i.data.ItemType == 2) {
-                if ((r.data.MPType == 0 || r.data.MPType ==1) && i.data.NeepMPType == 0 || i.data.NeedMPType == 1) {
+                if ((r.data.MPType == 0 || r.data.MPType ==1) && (i.data.NeepMPType == 0 || i.data.NeedMPType == 1)) {
                     if (r.data.MPType != i.data.NeedMPType) {
                         return false;
                     }
